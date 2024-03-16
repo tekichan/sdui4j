@@ -22,3 +22,15 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+### Local OS or IDE files ###
+.DS_Store
+.env
+/logs/
+sdui4j.properties
+.gradle/
+.idea/
+gradle/
+gradlew
+gradlew.bat
+build/

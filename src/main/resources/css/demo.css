@@ -1,0 +1,106 @@
+@font-face {
+    /* Ref: https://github.com/creationix/font-awesome/blob/master/FontAwesome.ttf */
+    font-family: 'FontAwesome';
+    src: url('../fonts/FontAwesome.ttf');
+}
+
+root {
+    display: block;
+}
+.root {
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+}
+
+.tabpage-content {
+    -fx-background-color: transparent;
+}
+.tab-header-background {
+    -fx-background-color: transparent;
+}
+.tab {
+    -fx-font-family: "Arial";
+    -fx-background-color: -fx-background;
+    -fx-background: #f8c8dc;
+}
+.tab:hover{
+    -fx-background: #FDB9C8;
+}
+.tab:selected{
+    -fx-background: #EC5578;
+}
+.tab:selected .tab-label {
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: white ;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
+.label {
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial Black";
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+#welcome-text {
+   -fx-font-size: 32px;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.button:pressed {
+  -fx-background-color: FIREBRICK;
+  -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+
+.imageview-border {
+    -fx-border-style: dashed;
+    -fx-border-width: 2;
+    -fx-border-color: rgba(128,128,128,0.7);
+    -fx-padding: 10;
+}
+
+.form-vbox {
+    -fx-border-width: 5;
+    -fx-padding: 10;
+}
+
+/* Disable horizontal scrollbar in Listview */
+.list-view .scroll-bar:horizontal .increment-arrow,
+.list-view .scroll-bar:horizontal .decrement-arrow,
+.list-view .scroll-bar:horizontal .increment-button,
+.list-view .scroll-bar:horizontal .decrement-button {
+    -fx-padding:0;
+}
+
+.status-bar {
+	-fx-padding: 4px;
+	-fx-pref-height: 30px;
+	-fx-background-color: -fx-body-color;
+	-fx-border-color: lightgray transparent transparent white;
+}
+
+.status-icon {
+    -fx-font-family: "FontAwesome";
+    -fx-font-weight: 800;
+    -fx-font-size: 16;
+}
+
+.status-label {
+    -fx-padding: 4px;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial Narrow";
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import java.net.URL?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="self.example.sdui4j.ctrls.PromptsListCell"
+      fx:id="hbox">
+    <!-- CSS -->
+    <stylesheets><URL value="@../css/demo.css" /></stylesheets>
+
+    <!-- Nodes -->
+    <TextField fx:id="textText" prefWidth="480" />
+    <Slider fx:id="weightSlider" max="1" value="0.5" prefWidth="85" />
+    <TextField fx:id="weightText" prefWidth="48" editable="false" />
+    <Button fx:id="minusButton" text="-"
+            onAction="#handleMinusPromptButton"/>
+</HBox>

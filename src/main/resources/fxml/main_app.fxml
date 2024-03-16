@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.lang.Integer?>
+<?import java.lang.Long?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="self.example.sdui4j.ctrls.MainController"
+            styleClass="root">
+    <!-- CSS -->
+    <stylesheets><URL value="@../css/demo.css" /></stylesheets>
+    <!-- Define constants -->
+    <fx:define>
+        <Integer fx:id="defaultCfgScale" fx:value="7" />
+        <Integer fx:id="minCfgScale" fx:value="0" />
+        <Integer fx:id="maxCfgScale" fx:value="35" />
+        <Integer fx:id="defaultSamples" fx:value="1" />
+        <Integer fx:id="minSamples" fx:value="1" />
+        <Integer fx:id="maxSamples" fx:value="10" />
+        <Long fx:id="defaultSeed" fx:value="0" />
+        <Long fx:id="minSeed" fx:value="0" />
+        <Long fx:id="maxSeed" fx:value="4294967295" />
+        <Integer fx:id="defaultSteps" fx:value="30" />
+        <Integer fx:id="minSteps" fx:value="10" />
+        <Integer fx:id="maxSteps" fx:value="50" />
+    </fx:define>
+    <left>
+        <!-- Input Form -->
+        <VBox BorderPane.alignment="CENTER" prefWidth="680" styleClass="form-vbox">
+            <!-- Engine ID -->
+            <HBox>
+                <Label text="Engine ID:" prefWidth="200" />
+                <ComboBox fx:id="engineIdCombo" prefWidth="320.0" promptText="Choose Engine ID" />
+            </HBox>
+            <!-- Function selection -->
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
+                    prefHeight="300">
+                <Tab fx:id="textToImageTab" text="Text To Image">
+                    <fx:include fx:id="textToImagePage" source="text_to_image_tab.fxml"/>
+                </Tab>
+                <Tab fx:id="imageToImageTab" text="Image To Image">
+                    <fx:include fx:id="imageToImagePage" source="image_to_image_tab.fxml"/>
+                </Tab>
+            </TabPane>
+            <!-- Common Fields -->
+            <GridPane alignment="center" hgap="10" vgap="10"
+                      styleClass="tabpage-content">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="75"/>
+                </columnConstraints>
+                <!-- Array of objects (TextPrompts) -->
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+                    <HBox alignment="BASELINE_CENTER" spacing="5">
+                        <Label text="Text Prompts:" prefWidth="620" />
+                        <Button fx:id="addPromptButton" text="+"
+                                onAction="#handlePlusPromptButton"/>
+                    </HBox>
+                    <ListView fx:id="textPromptsListView" />
+                </VBox>
+
+                <!-- CFG Scale -->
+                <Label text="CFG Scale:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" >
+                    <Slider fx:id="cfgScaleSlider" min="$minCfgScale" max="$maxCfgScale" value="$defaultCfgScale"
+                            prefWidth="500"
+                            blockIncrement="1" minorTickCount="1" />
+                    <TextField fx:id="cfgScaleText" text="$defaultCfgScale" editable="false" />
+                </HBox>
+
+                <!-- Clip Guidance Preset -->
+                <Label text="Clip Guidance Preset:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="clipGuidPresetCombo" prefWidth="320.0" promptText="Choose Clip Guidance"
+                          GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <!-- Sampler -->
+                <Label text="Sampler:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <ComboBox fx:id="samplerCombo" prefWidth="320.0" promptText="Choose Sampler"
+                          GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                <!-- Samples -->
+                <Label text="Samples:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="4" >
+                    <Slider fx:id="samplesSlider" min="$minSamples" max="$maxSamples" value="$defaultSamples"
+                            prefWidth="500"
+                            blockIncrement="1" minorTickCount="1" />
+                    <TextField fx:id="samplesText" text="$defaultSamples" editable="false" />
+                </HBox>
+
+                <!-- Seed -->
+                <Label text="Seed:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="5" >
+                    <Slider fx:id="seedSlider" min="$minSeed" max="$maxSeed" value="$defaultSeed"
+                            prefWidth="400"
+                            blockIncrement="1" minorTickCount="1" />
+                    <TextField fx:id="seedText" text="$defaultSeed" editable="false" />
+                </HBox>
+
+                <!-- Steps -->
+                <Label text="Steps:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="6" >
+                    <Slider fx:id="stepsSlider" min="$minSteps" max="$maxSteps" value="$defaultSteps"
+                            prefWidth="500"
+                            blockIncrement="1" minorTickCount="1" />
+                    <TextField fx:id="stepsText" text="$defaultSteps" editable="false" />
+                </HBox>
+
+                <!-- Style Preset -->
+                <Label text="Style Preset:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <ComboBox fx:id="stylePresetCombo" prefWidth="320.0" promptText="Choose Style Preset"
+                          GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            </GridPane>
+            <!-- Buttons -->
+            <HBox alignment="BASELINE_RIGHT" spacing="5">
+                <Button fx:id="submitButton" text="Submit" onAction="#handleSubmitButton"  styleClass="button" />
+                <Button fx:id="resetButton" text="Reset" onAction="#handleResetButton" styleClass="button"/>
+            </HBox>
+        </VBox>
+    </left>
+    <!-- Image Result -->
+    <right>
+        <VBox BorderPane.alignment="CENTER_LEFT"
+              prefWidth="600" prefHeight="768"
+              alignment="BOTTOM_CENTER"
+              styleClass="form-vbox">
+            <StackPane prefWidth="570" prefHeight="600" styleClass="imageview-border">
+                <ImageView fx:id="resultImageView" preserveRatio="true"
+                        fitWidth="550" fitHeight="550">
+                    <Image url="@../images/no_image_yet.png"/>
+                </ImageView>
+            </StackPane>
+            <StackPane style="-fx-padding: 10;" alignment="BOTTOM_RIGHT">
+                <Button fx:id="downloadButton" text="Download" onAction="#handleDownloadAction" styleClass="button"/>
+            </StackPane>
+        </VBox>
+    </right>
+    <bottom>
+        <HBox styleClass="status-bar">
+            <Label text="P" styleClass="status-icon" />
+            <Label fx:id="statusBarLabel" text="" styleClass="status-label" />
+        </HBox>
+    </bottom>
+</BorderPane>

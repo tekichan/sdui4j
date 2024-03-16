@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="self.example.sdui4j.ctrls.ImageToImagePageController">
+    <!-- Define constants -->
+    <fx:define>
+        <Double fx:id="defaultImageStrength" fx:value="0.35" />
+        <Double fx:id="defaultStepScheduleStart" fx:value="0.65" />
+        <Double fx:id="defaultStepScheduleEnd" fx:value="0.65" />
+        <Double fx:id="minValue" fx:value="0" />
+        <Double fx:id="maxValue" fx:value="1" />
+        <Double fx:id="unitValue" fx:value="0.01" />
+    </fx:define>
+    <!-- Initial Image -->
+    <VBox>
+        <Button text="Upload Image" onAction="#handleUploadInitImage" />
+        <ImageView  fx:id="uploadImageView" preserveRatio="true"
+                    fitWidth="90">
+            <Image url="@../images/no_image_yet.png"/>
+        </ImageView>
+    </VBox>
+    <GridPane alignment="center" hgap="5" vgap="5"
+              styleClass="tabpage-content">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="75"/>
+        </columnConstraints>
+        <!-- CSS -->
+        <stylesheets><URL value="@../css/demo.css" /></stylesheets>
+        <!-- Init Image Mode -->
+        <Label text="Init Image Mode:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <ComboBox fx:id="initImageModeCombo" prefWidth="320.0" promptText="Choose Image Mode"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <!-- Image Strength -->
+        <Label fx:id="lblImageStrength" text="Image Strength:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <HBox fx:id="hbxImageStrength" GridPane.columnIndex="1" GridPane.rowIndex="2" >
+            <Slider fx:id="imageStrengthSlider" min="$minValue" max="$maxValue" value="$defaultImageStrength"
+                    prefWidth="450"
+                    blockIncrement="$unitValue" minorTickCount="$unitValue" />
+            <TextField fx:id="imageStrengthText" text="$defaultImageStrength" minWidth="4" editable="false" />
+        </HBox>
+        <!-- Step Schedule Start -->
+        <Label fx:id="lblStepScheduleStart" text="Step Schedule Start:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <HBox fx:id="hbxStepScheduleStart" GridPane.columnIndex="1" GridPane.rowIndex="2" >
+            <Slider fx:id="stepScheduleStartSlider" min="$minValue" max="$maxValue" value="$defaultStepScheduleStart"
+                    prefWidth="450"
+                    blockIncrement="$unitValue" minorTickCount="$unitValue" />
+            <TextField fx:id="stepScheduleStartText" text="$defaultStepScheduleStart" minWidth="4" editable="false" />
+        </HBox>
+        <!-- Step Schedule End -->
+        <Label fx:id="lblStepScheduleEnd" text="Step Schedule End:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <HBox fx:id="hbxStepScheduleEnd" GridPane.columnIndex="1" GridPane.rowIndex="3" >
+            <Slider fx:id="stepScheduleEndSlider" min="$minValue" max="$maxValue" value="$defaultStepScheduleEnd"
+                    prefWidth="450"
+                    blockIncrement="$unitValue" minorTickCount="$unitValue" />
+            <TextField fx:id="stepScheduleEndText" text="$defaultStepScheduleEnd" minWidth="4" editable="false" />
+        </HBox>
+    </GridPane>
+</HBox>
