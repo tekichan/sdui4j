@@ -1,8 +1,8 @@
 # SDUI4J - Stable Diffusion User Interface for Java
 
 SDUI4J (Stable Diffusion User Interface for Java) is a standalone Graphic User Interface (GUI) program designed to
-showcase the capabilities of Stable Diffusion, a powerful text-to-image model. Built using Java, JavaFX, and RESTful
-APIs, SDUI4J provides an intuitive platform for interacting with Stable Diffusion.
+showcase the capabilities of Stable Diffusion, a powerful text-to-image model. Built using JavaFX, SDUI4J provides
+an intuitive platform for interacting with Stable Diffusion.
 
 ![Screenshot](sdui4j_screenshot.png)
 
@@ -13,7 +13,6 @@ APIs, SDUI4J provides an intuitive platform for interacting with Stable Diffusio
 - User-Friendly Interface: Intuitive GUI for seamless interaction with the text-to-image and image-to-image conversion processes.
 - Java-Based Implementation: Built entirely in Java, ensuring platform independence and ease of deployment.
 - Utilization of JavaFX: Utilizes JavaFX for creating modern and intuitive user interfaces.
-- Integration with RESTful APIs: Incorporates RESTful APIs for efficient communication and data exchange.
 
 ## Getting Started
 
@@ -37,11 +36,17 @@ git clone https://github.com/your-username/sdui4j.git
 
 ## Usage
 Once the program is running, you can:
+- Choose to proceed Text-To-Image or Image-To-Image in the single UI
+- Adjust various parameters by sliders
+- Select parameter options by dropdown boxes
+- Add or remove text prompts and weights by clicks
+- Upload an image for Image-To-Image
+- View and download the result image
 
 ## License
 SDUI4J is licensed under the [MIT License](./LICENSE).
 
-## References
+## Acknowledgement
 
 - [JavaFX](https://openjfx.io/)
 - [FXML Tutorial](https://docs.oracle.com/javafx/2/get_started/fxml_tutorial.htm)

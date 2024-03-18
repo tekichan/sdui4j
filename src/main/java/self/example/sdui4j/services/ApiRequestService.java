@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import self.example.sdui4j.models.ArtifactsResponse;
-import self.example.sdui4j.models.FinishReason;
-import self.example.sdui4j.models.ImageResponse;
-import self.example.sdui4j.models.TextToImageRequest;
+import self.example.sdui4j.models.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -81,7 +78,6 @@ public class ApiRequestService {
     public List<ImageResponse> postTextToImage(String engineId, TextToImageRequest requestBody)
             throws Exception {
         String url = STABILITY_DOMAIN + PATH_V1_GEN_TXT_TO_IMG.replace("{engine_id}", engineId);
-        // String url = "https://echo.zuplo.io/";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .headers(
@@ -128,6 +124,43 @@ public class ApiRequestService {
         } catch (JsonProcessingException jpe) {
             logger.warn("Failed to deserialize engine list from API response", jpe);
             return List.of();
+        }
+    }
+
+    /**
+     * Post a request to Image-To-Image API
+     * @param engineId      selected engine ID
+     * @param requestBody   Image-To-Image request body
+     * @return              a list of Image Response objects
+     * @throws Exception
+     */
+    public List<ImageResponse> postImageToImage(String engineId, ImageToImageRequest requestBody)
+            throws Exception {
+        String url = STABILITY_DOMAIN + PATH_V1_GEN_IMG_TO_IMG.replace("{engine_id}", engineId);
+        String boundary = ImageToImageBodyPublisherBuilder.getBoundary();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .headers(
+                        "Authorization", "Bearer " + this.apiKey,
+                        "Content-Type", "multipart/form-data; boundary=" + boundary,
+                        "Accept", "application/json"
+                )
+                .POST(
+                        (new ImageToImageBodyPublisherBuilder())
+                                .imageToImageRequest(requestBody)
+                                .boundary(boundary)
+                                .build()
+                )
+                .build();
+        HttpClient client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200) {
+            ArtifactsResponse artifactsResponse = jsonMapper.readValue(response.body(), ArtifactsResponse.class);
+            return convertImageResponse(artifactsResponse);
+        } else {
+            throw new Exception("Status Code: " + response.statusCode() + ", Body: " + response.body());
         }
     }
 }

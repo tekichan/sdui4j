@@ -43,6 +43,7 @@ public class ImageToImagePageController {
     @FXML private Label lblStepScheduleEnd;
     @FXML private HBox hbxStepScheduleEnd;
     @FXML private ImageView uploadImageView;
+    private File initImageFile;
 
     /**
      * Initalize configuration of UI objects
@@ -117,6 +118,7 @@ public class ImageToImagePageController {
                         getClass().getClassLoader().getResource(DEFAULT_IMAGE_URL).toExternalForm()
                 )
         );
+        initImageFile = null;
     }
 
     /**
@@ -129,6 +131,29 @@ public class ImageToImagePageController {
                 "Image Files", "*.jpg", "*.jpeg", "*.png"
         ));
         File file = uploadFileChooser.showOpenDialog(uploadImageView.getScene().getWindow());
-        if (file != null) uploadImageView.setImage(new Image("file:" + file.getAbsolutePath()));
+        if (file != null) {
+            initImageFile = file;
+            uploadImageView.setImage(new Image("file:" + initImageFile.getAbsolutePath()));
+        }
+    }
+
+    public File getInitImageFile() {
+        return this.initImageFile;
+    }
+
+    public InitImageMode getInitImageMode() {
+        return this.initImageModeCombo.getValue();
+    }
+
+    public String getImageStrengthText() {
+        return this.imageStrengthText.getText();
+    }
+
+    public String getStepScheduleStartText() {
+        return this.stepScheduleStartText.getText();
+    }
+
+    public String getStepScheduleEndText() {
+        return this.stepScheduleEndText.getText();
     }
 }

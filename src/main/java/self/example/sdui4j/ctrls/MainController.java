@@ -50,6 +50,7 @@ public class MainController {
     @FXML private ComboBox<StylePreset> stylePresetCombo;
 
     @FXML private Label statusBarLabel;
+    @FXML private TabPane tabPane;
     @FXML private TextToImagePageController textToImagePageController;
     @FXML private ImageToImagePageController imageToImagePageController;
 
@@ -143,6 +144,7 @@ public class MainController {
         this.resetComboBoxes();
         this.resetSliders();
         this.resetTextPromptListView();
+        this.setStatusBarText("");
         // Reset image
         this.downloadedByteArray = null;
         resultImageView.setImage(
@@ -179,12 +181,17 @@ public class MainController {
      * @param actionEvent   Action Event
      */
     public void handleSubmitButton(ActionEvent actionEvent) {
-        TextToImageRequest request = createTextToImageRequest();
+        boolean isSelectedImageToImage = tabPane.getSelectionModel().getSelectedItem().getText().equalsIgnoreCase("Image To Image");
         try {
-            List<ImageResponse> imageResponses = this.apiRequestService.postTextToImage(
-                    this.engineIdCombo.getValue(),
-                    request
-            );
+            List<ImageResponse> imageResponses = isSelectedImageToImage ?
+                    this.apiRequestService.postImageToImage(
+                            this.engineIdCombo.getValue(),
+                            createImageToImageRequest()
+                    ) :
+                    this.apiRequestService.postTextToImage(
+                        this.engineIdCombo.getValue(),
+                            createTextToImageRequest()
+                    );
             downloadedByteArray = imageResponses.get(0).imageByteArray();
             downloadedFileType = imageResponses.get(0).filetype();
             if (downloadedByteArray != null) {
@@ -198,12 +205,38 @@ public class MainController {
         }
     }
 
+    private ImageToImageRequest createImageToImageRequest() {
+        return new ImageToImageRequest(
+                textPromptList,
+                imageToImagePageController.getInitImageFile(),
+                imageToImagePageController.getInitImageMode(),
+                Double.valueOf(
+                        imageToImagePageController.getImageStrengthText()
+                ),
+                Double.valueOf(
+                        imageToImagePageController.getStepScheduleStartText()
+                ),
+                Double.valueOf(
+                        imageToImagePageController.getStepScheduleEndText()
+                ),
+                Integer.valueOf(cfgScaleText.getText()),
+                clipGuidPresetCombo.getValue(),
+                samplerCombo.getValue(),
+                Integer.valueOf(samplesText.getText()),
+                Long.valueOf(seedText.getText()),
+                Integer.valueOf(stepsText.getText()),
+                stylePresetCombo.getValue()
+        );
+    }
+
     private TextToImageRequest createTextToImageRequest() {
-        String heightText = this.textToImagePageController.getHeightText();
-        String widthText = this.textToImagePageController.getWidthText();
         return new TextToImageRequest(
-                Integer.valueOf(heightText),
-                Integer.valueOf(widthText),
+                Integer.valueOf(
+                        textToImagePageController.getHeightText()
+                ),
+                Integer.valueOf(
+                        textToImagePageController.getWidthText()
+                ),
                 textPromptList,
                 Integer.valueOf(cfgScaleText.getText()),
                 clipGuidPresetCombo.getValue(),
